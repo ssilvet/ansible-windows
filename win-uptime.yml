@@ -1,0 +1,17 @@
+---
+- name: Näita masinate uptime´i
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Käivitame Powershelli käsu
+      ansible.windows.win_shell: |
+        $boot = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+        $now = Get-Date
+        $uptime = $now - $boot
+        Write-Output ("{0} days, {1} hours, {2} minutes" -f $uptime.Days, $uptime.Hours, $uptime.Minutes)
+      register: uptime_output
+
+    - name: Kuva tulemus
+      debug:
+        msg: "{{ uptime_output.stdout_lines }}"

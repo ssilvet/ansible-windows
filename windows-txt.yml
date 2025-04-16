@@ -1,0 +1,15 @@
+---
+- name: Ansible test Windows masinatel
+  hosts: all
+  gather_facts: no
+
+  tasks:
+   - name: Loo C:\ansible_temp kaust
+     ansible.windows.win_file:
+       path: C:\ansible_temp
+       state: directory
+
+   - name: Lisa tekstfail sinna kausta
+     ansible.windows.win_copy:
+       content: "Tere Siim siin!"
+       dest: C:\ansible_temp\Tervitused.txt
